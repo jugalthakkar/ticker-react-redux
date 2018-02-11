@@ -29,15 +29,17 @@
 
 .Ticker-row {
   line-height: 2em;
+  text-align: left;
+  padding: 0 5vw 0 5vw;
 }
 
 
 .Ticker-row:nth-child(odd) {
-  background-color: beige;
+  background-color: white;
 }
 
 .Ticker-row:nth-child(even) {
-  background-color: antiquewhite;
+  background-color: lightgray;
 }
 
 
@@ -61,4 +63,21 @@
 
 .Ticker-time-container {
   width: 30vw;
+}
+
+.Ticker-price.price-up {
+  color:green;
+}
+.Ticker-price.price-down {
+  color:red;
+}
+
+.Ticker-price .price {
+  width: 7em;
+  display: inline-block;
+}
+
+.Ticker-price .symbol  {
+  width: 2em;
+  display: inline-block;
 }
