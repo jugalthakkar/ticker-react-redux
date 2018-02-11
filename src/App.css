@@ -26,3 +26,24 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+
+.Ticker-header {
+  border: 1px solid;
+  padding: 5px;
+}
+
+.Ticker-header > div {
+  padding: 5px;
+  border: solid 1px;
+}
+
+.Ticker-row {
+  border: 1px solid;
+  padding: 5px;
+}
+
+.Ticker-row > div {
+  padding: 5px;
+  border: solid 1px;
+}
