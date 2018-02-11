@@ -4,7 +4,6 @@ import {Container, Header, Icon, Table} from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import TickerName from '../components/TickerName';
 import TickerPrice from '../components/TickerPrice';
-import TickerTime from '../components/TickerTime';
 import TickerHistory from "../components/TickerHistory";
 
 
@@ -57,10 +56,11 @@ class Ticker extends Component {
                         <Table.Cell textAlign="center">
                             <Header as='h3'><TickerName name={key}/></Header>
                         </Table.Cell>
-                        <Table.Cell textAlign="center">
+                        <Table.Cell textAlign="left">
                             <TickerPrice price={this.state.tickers[key].price}
-                                         previousPrice={this.state.tickers[key].previousPrice}/>
-                            <TickerTime time={this.props.updateTime}/>
+                                         previousPrice={this.state.tickers[key].previousPrice}
+                                         time={this.props.updateTime}
+                            />
                         </Table.Cell>
                         <Table.Cell textAlign="center">
                             <TickerHistory priceHistory={this.state.tickers[key].priceHistory}/>
@@ -75,7 +75,7 @@ class Ticker extends Component {
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell textAlign="center">Name</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="center"><Icon name="dollar"/> Price</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="left"><Icon name="dollar"/> Price</Table.HeaderCell>
                             <Table.HeaderCell textAlign="center"><Icon name="line chart"/> History</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Icon} from 'semantic-ui-react';
+import Moment from 'react-moment';
+import {Icon, Header} from 'semantic-ui-react';
 
 class TickerPrice extends Component {
     render() {
@@ -16,8 +17,15 @@ class TickerPrice extends Component {
             }
         }
         return (<div className={changeClassName + " Ticker-price"}>
-            <span className="price">{this.props.price.toFixed(3)}</span>
-            <span className="symbol"><Icon color={iconColor} size='large' name={iconName}/></span>
+            <Header as='h2'>
+                <Icon color={iconColor} name={iconName}/>
+                <Header.Content>
+                    {this.props.price.toFixed(3)}
+                    <Header.Subheader>
+                        <Moment fromNow>{this.props.time}</Moment>
+                    </Header.Subheader>
+                </Header.Content>
+            </Header>
         </div>);
     }
 }
