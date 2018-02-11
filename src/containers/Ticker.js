@@ -42,20 +42,7 @@ class Ticker extends Component {
     }
 
     render() {
-        const tickers = Object
-            .keys(this.state.tickers)
-            .sort()
-            .map(key => {
-                const value = this.state.tickers[key];
-                return {
-                    name: value.name,
-                    price: value.price,
-                    previousPrice: value.previousPrice,
-                    priceHistory: value.priceHistory,
-                    updateTime: value.updateTime,
-
-                };
-            });
+        const tickers = this.mapStateToProps(this.state).tickers;
         return (
             <Container>
                 <TickerTable
@@ -66,12 +53,24 @@ class Ticker extends Component {
             </Container>
         );
     }
-    //
-    // mapStateToProps(state) {
-    //     return {
-    //         todos: getVisibleTodos(state.todos, state.visibilityFilter)
-    //     }
-    // }
+
+    mapStateToProps(state) {
+        return {
+            tickers: Object
+                .keys(state.tickers)
+                .sort()
+                .map(key => {
+                    const value = state.tickers[key];
+                    return {
+                        name: value.name,
+                        price: value.price,
+                        previousPrice: value.previousPrice,
+                        priceHistory: value.priceHistory,
+                        updateTime: value.updateTime
+                    };
+                })
+        }
+    }
 }
 
 
