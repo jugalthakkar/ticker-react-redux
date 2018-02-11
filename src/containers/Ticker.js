@@ -6,7 +6,6 @@ import TickerName from '../components/TickerName';
 import TickerPrice from '../components/TickerPrice';
 import TickerHistory from "../components/TickerHistory";
 
-
 class Ticker extends Component {
     updateTickers(data) {
         this.setState((prevState) => {
@@ -54,7 +53,7 @@ class Ticker extends Component {
                                negative={this.state.tickers[key].price < this.state.tickers[key].previousPrice}
                     >
                         <Table.Cell textAlign="center">
-                            <Header as='h3'><TickerName name={key}/></Header>
+                            <Header as='h2'><TickerName name={key}/></Header>
                         </Table.Cell>
                         <Table.Cell textAlign="left">
                             <TickerPrice price={this.state.tickers[key].price}
