@@ -1,83 +1,91 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+    animation: App-logo-spin infinite 20s linear;
+    height: 80px;
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+    background-color: #222;
+    height: 150px;
+    padding: 20px;
+    color: white;
 }
 
 .App-title {
-  font-size: 1.5em;
+    font-size: 1.5em;
 }
 
 .App-intro {
-  font-size: large;
+    font-size: large;
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .Ticker-row {
-  line-height: 2em;
-  text-align: left;
-  padding: 0 5vw 0 5vw;
+    line-height: 2em;
+    text-align: left;
+    padding: 0 5vw 0 5vw;
 }
 
-
 .Ticker-row:nth-child(odd) {
-  background-color: white;
+    background-color: white;
 }
 
 .Ticker-row:nth-child(even) {
-  background-color: lightgray;
+    background-color: lightgray;
 }
-
 
 .Ticker-row.Ticker-header {
-  background-color: black;
-  color: white;
+    background-color: black;
+    color: white;
 }
 
-
 .Ticker-row > div {
-  display: inline-block;
+    display: inline-block;
 }
 
 .Ticker-name-container {
-  width: 30vw;
+    width: 20vw;
 }
 
 .Ticker-price-container {
-  width: 30vw;
+    width: 50vw;
 }
 
 .Ticker-time-container {
-  width: 30vw;
+    width: 20vw;
 }
 
 .Ticker-price.price-up {
-  color:green;
+    color: green;
 }
+
 .Ticker-price.price-down {
-  color:red;
+    color: red;
 }
 
 .Ticker-price .price {
-  width: 7em;
-  display: inline-block;
+    width: 5em;
+    display: inline-block;
 }
 
-.Ticker-price .symbol  {
-  width: 2em;
-  display: inline-block;
+.Ticker-price .symbol {
+    width: 2em;
+    display: inline-block;
 }
+
+.Ticker-price .sparkline {
+    width: 5em;
+    display: inline-block;
+}
+

@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Moment from 'react-moment';
 import FontAwesome from 'react-fontawesome';
+import Websocket from 'react-websocket';
 import {Sparklines, SparklinesLine, SparklinesSpots} from 'react-sparklines';
 
 class TickerName extends Component {
@@ -34,7 +35,7 @@ class TickerPrice extends Component {
         return (<div className={changeClassName + " Ticker-price"}>
             <span className="price">{this.props.price.toFixed(3)}</span>
             <span className="symbol"><FontAwesome name={iconName}/></span>
-            <span className="price">
+            <span className="sparkline">
                 <Sparklines data={[...this.state.priceHistory, this.props.price]} limit={5}>
                     <SparklinesLine color="#1c8cdc"/>
                     <SparklinesSpots/>
@@ -64,6 +65,7 @@ class TickerTime extends Component {
     }
 }
 
+
 class TickerRow extends Component {
     render() {
         let name, price, time;
@@ -85,11 +87,10 @@ class TickerRow extends Component {
 }
 
 class Ticker extends Component {
-
     updateTickers(data) {
         this.setState((prevState, props) => {
             const tickers = [];
-            data.forEach(([name, price]) => {
+            JSON.parse(data).forEach(([name, price]) => {
                 tickers[name] = {price, updateTime: new Date()};
             });
             Object.entries(prevState.tickers).forEach(([name, value]) => {
@@ -110,11 +111,6 @@ class Ticker extends Component {
             tickers: {},
             counter: 0
         };
-        const webSocket = new WebSocket(this.props.url);
-
-        webSocket.onmessage = (event) => {
-            this.updateTickers(JSON.parse(event.data));
-        }
     }
 
     render() {
@@ -132,6 +128,8 @@ class Ticker extends Component {
             <div className="Ticker">
                 <TickerRow header={true}/>
                 {tickerRows}
+                <Websocket url={this.props.url}
+                           onMessage={this.updateTickers.bind(this)}/>
             </div>
         );
     }
