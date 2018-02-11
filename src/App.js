@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import 'font-awesome/css/font-awesome.min.css'
 import Moment from 'react-moment';
 import FontAwesome from 'react-fontawesome';
 import Websocket from 'react-websocket';
