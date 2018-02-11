@@ -55,7 +55,7 @@ class Ticker extends Component {
                         <Table.Cell textAlign="center">
                             <Header as='h2'><TickerName name={key}/></Header>
                         </Table.Cell>
-                        <Table.Cell textAlign="left">
+                        <Table.Cell textAlign="center">
                             <TickerPrice price={this.state.tickers[key].price}
                                          previousPrice={this.state.tickers[key].previousPrice}
                                          time={this.props.updateTime}
@@ -74,7 +74,7 @@ class Ticker extends Component {
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell textAlign="center">Name</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="left"><Icon name="dollar"/> Price</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="center"><Icon name="dollar"/> Price</Table.HeaderCell>
                             <Table.HeaderCell textAlign="center"><Icon name="line chart"/> History</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
