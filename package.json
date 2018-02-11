@@ -11,7 +11,9 @@
     "react-moment": "^0.7.0",
     "react-scripts": "1.1.1",
     "react-sparklines": "^1.7.0",
-    "react-websocket": "^2.0.0"
+    "react-websocket": "^2.0.0",
+    "semantic-ui-css": "^2.2.14",
+    "semantic-ui-react": "^0.78.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -19,5 +21,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage" : "http://jugalthakkar.github.io/ticker-react-redux"
+  "homepage": "http://jugalthakkar.github.io/ticker-react-redux"
 }

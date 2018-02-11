@@ -1,10 +1,15 @@
 import React, {Component} from 'react';
 import Websocket from 'react-websocket';
-import TickerRow from './TickerRow';
+import {Header, Table} from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
+import TickerName from '../components/TickerName';
+import TickerPrice from '../components/TickerPrice';
+import TickerTime from '../components/TickerTime';
+import TickerHistory from './TickerHistory';
 
 class Ticker extends Component {
     updateTickers(data) {
-        this.setState((prevState, props) => {
+        this.setState((prevState) => {
             const tickers = [];
             JSON.parse(data).forEach(([name, price]) => {
                 tickers[name] = {price, updateTime: new Date()};
@@ -34,16 +39,38 @@ class Ticker extends Component {
             .keys(this.state.tickers)
             .sort()
             .map(key =>
-                (<TickerRow
-                    key={key}
-                    name={key}
-                    updateTime={this.state.tickers[key].updateTime}
-                    price={this.state.tickers[key].price}/>)
+                (
+                    <Table.Row key={key}>
+                        <Table.Cell>
+                            <Header as='h2' textAlign='center'><TickerName name={key}/></Header>
+                        </Table.Cell>
+                        <Table.Cell>
+                            <TickerPrice price={this.state.tickers[key].price}
+                                         time={this.state.tickers[key].updateTime}/>
+                            <TickerTime time={this.props.updateTime}/>
+                        </Table.Cell>
+                        <Table.Cell>
+                            <TickerHistory price={this.state.tickers[key].price}
+                                         time={this.state.tickers[key].updateTime}/>
+                        </Table.Cell>
+                    </Table.Row>
+                )
             );
         return (
             <div className="Ticker">
-                <TickerRow header={true}/>
-                {tickerRows}
+                <Table celled padded>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell singleLine>Name</Table.HeaderCell>
+                            <Table.HeaderCell>Price</Table.HeaderCell>
+                            <Table.HeaderCell>History</Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+
+                    <Table.Body>
+                        {tickerRows}
+                    </Table.Body>
+                </Table>
                 <Websocket url={this.props.url}
                            onMessage={this.updateTickers.bind(this)}/>
             </div>
