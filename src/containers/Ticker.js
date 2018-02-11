@@ -52,30 +52,29 @@ class Ticker extends Component {
                                positive={this.state.tickers[key].price > this.state.tickers[key].previousPrice}
                                negative={this.state.tickers[key].price < this.state.tickers[key].previousPrice}
                     >
-                        <Table.Cell textAlign="center">
+                        <Table.Cell textAlign="left">
                             <Header as='h2'><TickerName name={key}/></Header>
                         </Table.Cell>
-                        <Table.Cell textAlign="center">
+                        <Table.Cell textAlign="left">
                             <TickerPrice price={this.state.tickers[key].price}
                                          previousPrice={this.state.tickers[key].previousPrice}
                                          time={this.props.updateTime}
                             />
                         </Table.Cell>
-                        <Table.Cell textAlign="center">
+                        <Table.Cell textAlign="left">
                             <TickerHistory priceHistory={this.state.tickers[key].priceHistory}/>
                         </Table.Cell>
                     </Table.Row>
                 )
             );
         return (
-
             <Container>
                 <Table stackable padded>
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell textAlign="center">Name</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="center"><Icon name="dollar"/> Price</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="center"><Icon name="line chart"/> History</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="left">Name</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="left"><Icon name="dollar"/> Price</Table.HeaderCell>
+                            <Table.HeaderCell textAlign="left"><Icon name="line chart"/> History</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>

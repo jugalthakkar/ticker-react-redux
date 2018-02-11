@@ -1,5 +1,6 @@
 .App {
     text-align: center;
+    background-color: #222;
 }
 
 .App-logo {
@@ -36,5 +37,4 @@
 .sparkline-container{
     width: 10em;
     height: 2em;
-    margin: auto;
 }
