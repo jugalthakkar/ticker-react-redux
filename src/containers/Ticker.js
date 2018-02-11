@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import Websocket from 'react-websocket';
-import {Container, Header, Icon, Table} from 'semantic-ui-react';
+import {Container} from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
-import TickerName from '../components/TickerName';
-import TickerPrice from '../components/TickerPrice';
-import TickerHistory from "../components/TickerHistory";
+import TickerTable from "../components/TickerTable";
 
 class Ticker extends Component {
     updateTickers(data) {
@@ -13,6 +11,7 @@ class Ticker extends Component {
             JSON.parse(data).forEach(([name, price]) => {
                 tickers[name] = {
                     price,
+                    name: name,
                     updateTime: new Date(),
                     priceHistory: [price],
                     previousPrice: undefined
@@ -43,49 +42,36 @@ class Ticker extends Component {
     }
 
     render() {
-        const tickerRows = Object
+        const tickers = Object
             .keys(this.state.tickers)
             .sort()
-            .map(key =>
-                (
-                    <Table.Row key={key}
-                               positive={this.state.tickers[key].price > this.state.tickers[key].previousPrice}
-                               negative={this.state.tickers[key].price < this.state.tickers[key].previousPrice}
-                    >
-                        <Table.Cell textAlign="left">
-                            <Header as='h2'><TickerName name={key}/></Header>
-                        </Table.Cell>
-                        <Table.Cell textAlign="left">
-                            <TickerPrice price={this.state.tickers[key].price}
-                                         previousPrice={this.state.tickers[key].previousPrice}
-                                         time={this.props.updateTime}
-                            />
-                        </Table.Cell>
-                        <Table.Cell textAlign="left">
-                            <TickerHistory priceHistory={this.state.tickers[key].priceHistory}/>
-                        </Table.Cell>
-                    </Table.Row>
-                )
-            );
+            .map(key => {
+                const value = this.state.tickers[key];
+                return {
+                    name: value.name,
+                    price: value.price,
+                    previousPrice: value.previousPrice,
+                    priceHistory: value.priceHistory,
+                    updateTime: value.updateTime,
+
+                };
+            });
         return (
             <Container>
-                <Table stackable padded>
-                    <Table.Header>
-                        <Table.Row>
-                            <Table.HeaderCell textAlign="left">Name</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="left"><Icon name="dollar"/> Price</Table.HeaderCell>
-                            <Table.HeaderCell textAlign="left"><Icon name="line chart"/> History</Table.HeaderCell>
-                        </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                        {tickerRows}
-                    </Table.Body>
-                </Table>
+                <TickerTable
+                    tickers={tickers}
+                />
                 <Websocket url={this.props.url}
                            onMessage={this.updateTickers.bind(this)}/>
             </Container>
         );
     }
+    //
+    // mapStateToProps(state) {
+    //     return {
+    //         todos: getVisibleTodos(state.todos, state.visibilityFilter)
+    //     }
+    // }
 }
 
 
