@@ -5,14 +5,24 @@ import 'semantic-ui-css/semantic.min.css';
 import TickerName from '../components/TickerName';
 import TickerPrice from '../components/TickerPrice';
 import TickerTime from '../components/TickerTime';
-import TickerHistory from './TickerHistory';
+import {Sparklines, SparklinesLine, SparklinesSpots} from 'react-sparklines';
 
 class Ticker extends Component {
+
     updateTickers(data) {
         this.setState((prevState) => {
             const tickers = [];
             JSON.parse(data).forEach(([name, price]) => {
-                tickers[name] = {price, updateTime: new Date()};
+                tickers[name] = {
+                    price,
+                    updateTime: new Date(),
+                    priceHistory: [price],
+                    previousPrice: undefined
+                };
+                if (prevState.tickers[name]) {
+                    tickers[name].previousPrice = prevState.tickers[name].price;
+                    tickers[name].priceHistory = [...prevState.tickers[name].priceHistory, price];
+                }
             });
             Object.entries(prevState.tickers).forEach(([name, value]) => {
                 if (!tickers[name]) {
@@ -42,26 +52,28 @@ class Ticker extends Component {
                 (
                     <Table.Row key={key}>
                         <Table.Cell>
-                            <Header as='h2' textAlign='center'><TickerName name={key}/></Header>
+                            <Header as='h3' textAlign='center'><TickerName name={key}/></Header>
                         </Table.Cell>
                         <Table.Cell>
                             <TickerPrice price={this.state.tickers[key].price}
-                                         time={this.state.tickers[key].updateTime}/>
+                                         previousPrice={this.state.tickers[key].previousPrice}/>
                             <TickerTime time={this.props.updateTime}/>
                         </Table.Cell>
                         <Table.Cell>
-                            <TickerHistory price={this.state.tickers[key].price}
-                                         time={this.state.tickers[key].updateTime}/>
+                            <Sparklines data={this.state.tickers[key].priceHistory} limit={10}>
+                                <SparklinesLine color="#1c8cdc"/>
+                                <SparklinesSpots/>
+                            </Sparklines>
                         </Table.Cell>
                     </Table.Row>
                 )
             );
         return (
             <div className="Ticker">
-                <Table celled padded>
+                <Table sortable stackable>
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell singleLine>Name</Table.HeaderCell>
+                            <Table.HeaderCell>Name</Table.HeaderCell>
                             <Table.HeaderCell>Price</Table.HeaderCell>
                             <Table.HeaderCell>History</Table.HeaderCell>
                         </Table.Row>
