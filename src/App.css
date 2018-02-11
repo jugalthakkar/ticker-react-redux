@@ -27,23 +27,38 @@
   to { transform: rotate(360deg); }
 }
 
-
-.Ticker-header {
-  border: 1px solid;
-  padding: 5px;
-}
-
-.Ticker-header > div {
-  padding: 5px;
-  border: solid 1px;
-}
-
 .Ticker-row {
-  border: 1px solid;
-  padding: 5px;
+  line-height: 2em;
 }
+
+
+.Ticker-row:nth-child(odd) {
+  background-color: beige;
+}
+
+.Ticker-row:nth-child(even) {
+  background-color: antiquewhite;
+}
+
+
+.Ticker-row.Ticker-header {
+  background-color: black;
+  color: white;
+}
+
 
 .Ticker-row > div {
-  padding: 5px;
-  border: solid 1px;
+  display: inline-block;
+}
+
+.Ticker-name-container {
+  width: 30vw;
+}
+
+.Ticker-price-container {
+  width: 30vw;
+}
+
+.Ticker-time-container {
+  width: 30vw;
 }
