@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import Websocket from 'react-websocket';
-import {Header, Table} from 'semantic-ui-react';
+import {Header, Icon, Table} from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import TickerName from '../components/TickerName';
 import TickerPrice from '../components/TickerPrice';
 import TickerTime from '../components/TickerTime';
-import {Sparklines, SparklinesLine, SparklinesSpots} from 'react-sparklines';
+import TickerHistory from "../components/TickerHistory";
+
 
 class Ticker extends Component {
-
     updateTickers(data) {
         this.setState((prevState) => {
             const tickers = [];
@@ -50,9 +50,12 @@ class Ticker extends Component {
             .sort()
             .map(key =>
                 (
-                    <Table.Row key={key}>
+                    <Table.Row key={key}
+                               positive={this.state.tickers[key].price > this.state.tickers[key].previousPrice}
+                               negative={this.state.tickers[key].price < this.state.tickers[key].previousPrice}
+                    >
                         <Table.Cell>
-                            <Header as='h3' textAlign='center'><TickerName name={key}/></Header>
+                            <Header as='h3'><TickerName name={key}/></Header>
                         </Table.Cell>
                         <Table.Cell>
                             <TickerPrice price={this.state.tickers[key].price}
@@ -60,25 +63,21 @@ class Ticker extends Component {
                             <TickerTime time={this.props.updateTime}/>
                         </Table.Cell>
                         <Table.Cell>
-                            <Sparklines data={this.state.tickers[key].priceHistory} limit={10}>
-                                <SparklinesLine color="#1c8cdc"/>
-                                <SparklinesSpots/>
-                            </Sparklines>
+                            <TickerHistory priceHistory={this.state.tickers[key].priceHistory}/>
                         </Table.Cell>
                     </Table.Row>
                 )
             );
         return (
             <div className="Ticker">
-                <Table sortable stackable>
+                <Table stackable padded>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell>Name</Table.HeaderCell>
-                            <Table.HeaderCell>Price</Table.HeaderCell>
-                            <Table.HeaderCell>History</Table.HeaderCell>
+                            <Table.HeaderCell><Icon name="dollar"/> Price</Table.HeaderCell>
+                            <Table.HeaderCell><Icon name="line chart"/> History</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
-
                     <Table.Body>
                         {tickerRows}
                     </Table.Body>
