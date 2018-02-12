@@ -5,40 +5,53 @@ import 'semantic-ui-css/semantic.min.css';
 import TickerTable from "../components/TickerTable";
 
 class Ticker extends Component {
-    updateTickers(data) {
+
+
+    dispatch(action) {
         this.setState((prevState) => {
-            const tickers = [];
-            JSON.parse(data).forEach(([name, price]) => {
-                tickers[name] = {
+            return this.reduce(prevState, action);
+        });
+    }
+
+    reduce(prevState = {}, action) {
+        if (action.type === 'UPDATE') {
+            const nextState = {};
+            action.data.forEach(([name, price]) => {
+                nextState[name] = {
                     price,
-                    name: name,
+                    name,
                     updateTime: new Date(),
                     priceHistory: [price],
                     previousPrice: undefined
                 };
-                if (prevState.tickers[name]) {
-                    tickers[name].previousPrice = prevState.tickers[name].price;
-                    tickers[name].priceHistory = [...prevState.tickers[name].priceHistory, price];
+                if (prevState && prevState[name]) {
+                    nextState[name].previousPrice = prevState[name].price;
+                    nextState[name].priceHistory = [...prevState[name].priceHistory, price];
                 }
             });
-            Object.entries(prevState.tickers).forEach(([name, value]) => {
-                if (!tickers[name]) {
-                    tickers[name] = value;
+            Object.entries(prevState).forEach(([name, value]) => {
+                if (!nextState[name]) {
+                    nextState[name] = value;
                 }
             });
-            return {
-                counter: prevState.counter + 1,
-                tickers
-            };
-        });
+            return nextState;
+        } else {
+            return prevState;
+        }
+
+    }
+
+    handleMessage(data) {
+        const action = {
+            type: 'UPDATE',
+            data: JSON.parse(data)
+        };
+        this.dispatch(action);
     }
 
     constructor(props) {
         super(props);
-        this.state = {
-            tickers: {},
-            counter: 0
-        };
+        this.state = {};
     }
 
     render() {
@@ -49,7 +62,7 @@ class Ticker extends Component {
                     tickers={tickers}
                 />
                 <Websocket url={this.props.url}
-                           onMessage={this.updateTickers.bind(this)}/>
+                           onMessage={this.handleMessage.bind(this)}/>
             </Container>
         );
     }
@@ -57,10 +70,10 @@ class Ticker extends Component {
     mapStateToProps(state) {
         return {
             tickers: Object
-                .keys(state.tickers)
+                .keys(state)
                 .sort()
                 .map(key => {
-                    const value = state.tickers[key];
+                    const value = state[key];
                     return {
                         name: value.name,
                         price: value.price,
