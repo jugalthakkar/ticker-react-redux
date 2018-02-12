@@ -11,7 +11,7 @@ class App extends Component {
                     <img src={logo} className="App-logo" alt="logo"/>
                     <h1 className="App-title">Ticker</h1>
                 </header>
-                <Ticker url="ws://stocks.mnet.website"/>
+                <Ticker url="wss://ticker-proxy.herokuapp.com"/>
             </div>
         );
     }
